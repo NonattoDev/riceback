@@ -1,22 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession, getSession } from "next-auth/react";
 
 const LoginPage: React.FC = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  useEffect(() => {
+    if (status === "loading") return;
+    if (session) {
+      if (session?.user?.admin) {
+        router.push("/usuarios/admin");
+      } else if (session?.user?.seguimento === "Restaurante") {
+        router.push("/usuarios/restaurante");
+      } else if (session?.user?.seguimento === "Consumidor") {
+        router.push("/usuarios/cliente");
+      }
+    }
+  }, [session, router, status]);
+
+  const handleLogin = async () => {
     if (!login || !password) return toast.warn("Preencha todos os campos");
 
-    signIn("credentials", {
+    const result = await signIn("credentials", {
+      redirect: false,
       login: login,
       senha: password,
-      callbackUrl: "/",
     });
 
-    toast.success("Login realizado com sucesso");
+    if (result?.error) {
+      return toast.error(result.error);
+    } else {
+      toast.success("Login realizado com sucesso");
+    }
   };
 
   return (

@@ -5,13 +5,15 @@ import validarCPF from "@/utils/CadastroCliente/validarCPF";
 import verificarSenha from "@/utils/CadastroCliente/verificarSenha";
 import buscarEnderecoPorCEP from "@/utils/CEP/BuscaCEP";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 const ClienteCadastro: React.FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     cpf: "",
     nome: "",
     dataNascimento: "",
     endereco: "",
+    numero: "",
     bairro: "",
     cidade: "",
     estado: "",
@@ -20,6 +22,7 @@ const ClienteCadastro: React.FC = () => {
     email: "",
     senha: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,38 +30,45 @@ const ClienteCadastro: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (Object.values(formData).some((value) => !value)) return toast.info("Preencha todos os campos");
+    setLoading(true);
+    if (Object.values(formData).some((value) => !value)) {
+      setLoading(false);
+      return toast.warn("Preencha todos os campos");
+    }
     try {
       validarCPF(formData.cpf);
       verificarSenha(formData.senha);
     } catch (error: any) {
+      setLoading(false);
       toast.error(error?.message);
       return;
     }
 
     try {
       // Inserindo usuario no banco de dados
-      const { data } = await axios.post("/api/usuario/usuario", formData);
-
+      const { data } = await axios.post("/api/cadastro/usuario", formData);
       console.log(data);
     } catch (error: any) {
       return toast.error(error?.response.data.message);
     }
 
-    // setFormData({
-    //   cpf: "",
-    //   nome: "",
-    //   dataNascimento: "",
-    //   endereco: "",
-    //   bairro: "",
-    //   cidade: "",
-    //   estado: "",
-    //   cep: "",
-    //   telefone: "",
-    //   email: "",
-    //   senha: "",
-    // });
-    return toast.success("Cadastro realizado com sucesso");
+    setFormData({
+      cpf: "",
+      nome: "",
+      dataNascimento: "",
+      numero: "",
+      endereco: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      cep: "",
+      telefone: "",
+      email: "",
+      senha: "",
+    });
+    setLoading(false);
+    toast.success("Cadastro realizado com sucesso");
+    return router.push("/auth/login");
   };
 
   const handleCepBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
@@ -87,7 +97,7 @@ const ClienteCadastro: React.FC = () => {
           <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">
             CPF
           </label>
-          <InputMask mask="999.999.999-99" name="cpf" id="cpf" value={formData.cpf} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <InputMask mask="999999999-99" name="cpf" id="cpf" value={formData.cpf} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
         </div>
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
@@ -100,7 +110,7 @@ const ClienteCadastro: React.FC = () => {
           <label htmlFor="senha" className="block text-sm font-medium text-gray-700">
             Senha
           </label>
-          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" maxLength={10} max={10} />
         </div>
 
         <div>
@@ -147,7 +157,12 @@ const ClienteCadastro: React.FC = () => {
           </label>
           <input type="text" name="estado" id="estado" value={formData.estado} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
         </div>
-
+        <div>
+          <label htmlFor="numero" className="block text-sm font-medium text-gray-700">
+            Número
+          </label>
+          <input type="text" name="numero" id="numero" value={formData.numero} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+        </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
@@ -158,12 +173,18 @@ const ClienteCadastro: React.FC = () => {
           <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">
             Telefone
           </label>
-          <InputMask mask="(99) 99999-9999" name="telefone" id="telefone" value={formData.telefone} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <InputMask mask="(99)99999-9999" name="telefone" id="telefone" value={formData.telefone} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2">
-          Cadastrar
-        </button>
+        {loading ? (
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center items-center">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+          </button>
+        ) : (
+          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2">
+            Cadastrar
+          </button>
+        )}
       </div>
     </form>
   );

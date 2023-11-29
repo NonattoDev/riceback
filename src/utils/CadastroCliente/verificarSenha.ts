@@ -6,6 +6,11 @@ export default function verificarSenha(password: string) {
     throw new Error("A senha deve ter pelo menos 8 caracteres");
   }
 
+  // Verifica se a senha tem pelo menos 8 caracteres
+  if (password.length > 10) {
+    throw new Error("A senha deve ter no máximo 10 caracteres");
+  }
+
   // Verifica se a senha contém pelo menos um número
   if (!/\d/.test(password)) {
     throw new Error("A senha deve ter pelo menos um número");

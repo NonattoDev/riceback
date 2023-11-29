@@ -2,12 +2,11 @@ import db from "@/db/db";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { DefaultSession } from "next-auth";
-import { redirect } from "next/dist/server/api-utils";
 
 declare module "next-auth" {
   interface User {
     admin?: boolean;
-    CodSeg?: string;
+    seguimento?: string;
   }
 
   interface Session extends DefaultSession {
@@ -41,7 +40,7 @@ export const authOptions = {
           return user;
         }
 
-        return null;
+        throw new Error("Usuário ou senha inválidos");
       },
     }),
   ],
