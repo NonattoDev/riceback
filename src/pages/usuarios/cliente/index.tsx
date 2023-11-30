@@ -45,14 +45,15 @@ const ClientePage: React.FC<{ user: string }> = (props) => {
   };
 
   // Função para lidar com a contribuição para a ONG
-  const handleContribuir = () => {
+  const handleContribuir = async () => {
     try {
-      const response = axios.post(`/api/solicitar/servicorice`, user);
+      const response = await axios.post(`/api/solicitar/servicorice`, user);
+
+      if (response.status === 200) return toast.success("Solicitação enviada com sucesso!");
     } catch (error: any) {
       return toast.error(error.message);
     }
     // Lógica para contribuir com a ONG
-    toast.success("Contribuição realizada com sucesso!");
   };
 
   const handleBlurCep = async (cep: string) => {

@@ -6,16 +6,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     const CodCli = req.body.CodCli;
 
-    const inserirServico = await db("servico")
-      .insert({
-        CodCli: CodCli,
-        CodFor: 2, //CodCli do Restaurante,
-        CodPro: 1, // Codigo do Arroz
-        Data: moment().format("YYYY-MM-DD 00:00:00.000"),
-        Hora: moment().format("HH:mm"),
-      })
-      .returning("Lanc");
-    console.log(inserirServico);
+    try {
+      const inserirServico = await db("servico1")
+        .insert({
+          CodCli: CodCli,
+          CodFor: 2, //CodCli do Restaurante,
+          CodPro: 1, // Codigo do Arroz
+          Data: moment().format("YYYY-MM-DD 00:00:00.000"),
+          Hora: moment().format("HH:mm"),
+        })
+        .returning("Lanc");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Erro ao inserir o serviço" });
+    }
 
     // Lógica para lidar com a requisição POST aqui
     res.status(200).json({ message: "Requisição POST recebida com sucesso!" });
