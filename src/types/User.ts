@@ -1,0 +1,31 @@
+export default interface User {
+  CodCli?: number;
+  CodUsu?: number;
+  Cliente?: string;
+  Razao?: string;
+  Complemento?: string;
+  Caminho?: string;
+  Dia_Nasc?: number;
+  Mes_Nasc?: number;
+  Ano_Nasc?: number;
+  CodSeg?: number;
+  CodInd?: number;
+  Endereco?: string;
+  Bairro?: string;
+  Cidade?: string;
+  Estado?: string;
+  Cep?: string;
+  Tel?: string;
+  Tel2?: string;
+  Cel?: string;
+  CPF?: string;
+  RG?: string;
+  Orgao?: string;
+  CGC?: string;
+  IE?: string;
+  DataCad?: string;
+  Situacao?: string;
+  Chave?: string;
+  EMail?: string;
+  Numero?: string;
+}

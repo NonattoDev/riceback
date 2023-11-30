@@ -16,9 +16,9 @@ const LoginPage: React.FC = () => {
     if (session) {
       if (session?.user?.admin) {
         router.push("/usuarios/admin");
-      } else if (session?.user?.seguimento === "Restaurante") {
+      } else if (session?.user?.segmento === "Restaurante") {
         router.push("/usuarios/restaurante");
-      } else if (session?.user?.seguimento === "Consumidor") {
+      } else if (session?.user?.segmento === "Consumidor") {
         router.push("/usuarios/cliente");
       }
     }

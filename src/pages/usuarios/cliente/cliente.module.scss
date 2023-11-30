@@ -1,0 +1,100 @@
+.CardDadosCliente {
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s;
+    margin: 10px auto;
+
+
+    @media (max-width: 599px) {
+        width: 100%;
+    }
+
+    @media (min-width: 600px) and (max-width: 1024px) {
+        width: 80%;
+    }
+
+    @media (min-width: 1025px) {
+        width: 600px;
+    }
+
+
+
+}
+
+.CardDadosCliente:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /* hover:shadow-xl */
+
+}
+
+.DadosColunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Duas colunas por padrão */
+    gap: 1rem;
+    
+    input, .react-input-mask {
+      // Estilos para inputs e InputMasks
+      border: 1px solid #dadada;
+      border-radius: 4px;
+      padding: 0.3rem;
+      margin-bottom: 0.5rem;
+
+      &:focus {
+        border-color: #1E90FF !important;
+      }
+
+      &:disabled {
+      border: 0;
+      padding:0;
+      margin-bottom: 0;
+      }
+    }
+  }
+  
+
+
+@media (max-width: 600px) {
+
+    /* Ajuste o breakpoint conforme necessário */
+    .DadosColunas {
+        grid-template-columns: 1fr;
+        /* Uma coluna para telas menores */
+    }
+}
+
+
+.ButtonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px auto;
+    width: 31%;
+    font-weight: bold;
+
+    .iconButton { // Seletor de classe para o ícone, se necessário
+        margin-right: 0.5rem; // Espaço entre o ícone e o texto
+      }
+    
+    &:hover {
+        background-color: #4169E1;
+    }
+}
+
+

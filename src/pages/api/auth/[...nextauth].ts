@@ -6,7 +6,7 @@ import { DefaultSession } from "next-auth";
 declare module "next-auth" {
   interface User {
     admin?: boolean;
-    seguimento?: string;
+    segmento?: string;
   }
 
   interface Session extends DefaultSession {
@@ -53,13 +53,13 @@ export const authOptions = {
         token.email = user.EMail;
         switch (user.CodSeg) {
           case 1:
-            token.seguimento = "Consumidor";
+            token.segmento = "Consumidor";
             break;
           case 2:
-            token.seguimento = "Restaurante";
+            token.segmento = "Restaurante";
             break;
           default:
-            token.seguimento = "Desconhecido";
+            token.segmento = "Desconhecido";
             break;
         }
       }
@@ -70,7 +70,7 @@ export const authOptions = {
         token.id = user.CodUsu;
         token.name = user.Usuario;
         token.email = user.EMail;
-        token.seguimento = "Administrador";
+        token.segmento = "Administrador";
       }
       return token;
     },
@@ -80,7 +80,7 @@ export const authOptions = {
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.admin = token.admin;
-      session.user.seguimento = token.seguimento;
+      session.user.segmento = token.segmento;
       // Adicione outras propriedades personalizadas conforme necessário
       return session;
     },

@@ -15,7 +15,7 @@ const RestaurantePage: React.FC = () => {
 
   useEffect(() => {
     if (session) {
-      if (session.user?.seguimento != "Restaurante") router.push("/auth/login");
+      if (session.user?.segmento != "Restaurante") router.push("/auth/login");
     }
   }, [session, router, status]);
 
