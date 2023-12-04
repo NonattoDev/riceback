@@ -104,12 +104,12 @@ const RestauranteCadastro: React.FC = () => {
 
     try {
       const { data } = await axios.get(`/api/cadastro/buscaCNPJ/${cnpj}`);
-      console.log(data);
+
       setFormData({
         ...formData,
         Cliente: data.fantasia,
         Razao: data.nome,
-        dataNascimento: moment(data.abertura).format("yyyy-MM-DD"),
+        dataNascimento: moment(data.abertura, "DD/MM/YYYY").format("yyyy-MM-DD"),
         cep: data.cep,
         endereco: data.logradouro,
         email: data.email,

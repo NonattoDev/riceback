@@ -2,6 +2,14 @@ import db from "@/db/db";
 import transporter from "@/utils/NodeMailer/Transporter";
 import moment from "moment";
 import { NextApiRequest, NextApiResponse } from "next";
+import NodeGeocoder, { Options } from "node-geocoder";
+
+const options: Options = {
+  provider: "google",
+  apiKey: "AIzaSyBIWweOiahvnYhQddBxGeg6xu5Wb9h1Hjo",
+};
+
+const geocoder = NodeGeocoder(options);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -17,6 +25,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let CodCli = ultimoCodCli?.CodCli + 1;
 
     try {
+      const resGeocode = await geocoder.geocode(`${usuario.endereco}, ${usuario.numero}, ${usuario.cidade}, ${usuario.estado}, ${usuario.cep}`);
+      const latitude = resGeocode[0]?.latitude;
+      const longitude = resGeocode[0]?.longitude;
+
+      console.log(resGeocode, latitude, longitude);
+
       const Cliente = await db("clientes")
         .insert({
           CodCli,
@@ -39,6 +53,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           CodSeg: 2,
           Tipo: "J",
           DataCad: moment().format("yyyy-MM-DD"),
+          Latitude: latitude,
+          Longitude: longitude,
         })
         .returning("*");
 

@@ -41,29 +41,33 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-8 rounded shadow">
-        <h2 className="text-2xl font-bold mb-4">Faça login</h2>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="login" className="block mb-2 font-medium">
-              Email ou Usuário
-            </label>
-            <input type="text" id="login" className="w-full border border-gray-300 rounded px-3 py-2" value={login} onChange={(e) => setLogin(e.target.value)} />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block mb-2 font-medium">
-              Digite sua senha
-            </label>
-            <input type="password" id="password" className="w-full border border-gray-300 rounded px-3 py-2" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div>
-            <button type="button" className="bg-blue-500 text-white rounded px-4 py-2" onClick={handleLogin}>
-              Login
-            </button>
+    <div className="flex justify-center items-center h-screen bg-base-200">
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">Faça login</h2>
+          <form>
+            <div className="form-control">
+              <label className="label" htmlFor="login">
+                <span className="label-text">Email ou Usuário</span>
+              </label>
+              <input type="text" id="login" className="input input-bordered" value={login} onChange={(e) => setLogin(e.target.value)} />
+            </div>
+            <div className="form-control mt-4">
+              <label className="label" htmlFor="password">
+                <span className="label-text">Digite sua senha</span>
+              </label>
+              <input type="password" id="password" className="input input-bordered" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <div className="form-control mt-6">
+              <button type="button" className="btn btn-primary" onClick={handleLogin}>
+                Login
+              </button>
+            </div>
+          </form>
+          <div className="flex justify-center mt-4">
             <Link href={`/auth/cadastro`}>Criar conta</Link>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

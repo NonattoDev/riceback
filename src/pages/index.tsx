@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import Loading from "@/components/Loading/loading";
-const inter = Inter({ subsets: ["latin"] });
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 

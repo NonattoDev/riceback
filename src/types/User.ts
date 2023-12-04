@@ -28,4 +28,6 @@ export default interface User {
   Chave?: string;
   EMail?: string;
   Numero?: string;
+  Latitude?: string;
+  Longitude?: string;
 }
