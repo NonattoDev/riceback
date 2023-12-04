@@ -10,8 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const user = req.body;
     try {
       await db("Clientes").where("CodCli", user.CodCli).update(user);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.message);
       res.status(500).json({ message: "Erro ao atualizar o usuário" });
       return;
     }

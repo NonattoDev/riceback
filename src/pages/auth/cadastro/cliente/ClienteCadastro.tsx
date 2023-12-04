@@ -47,7 +47,6 @@ const ClienteCadastro: React.FC = () => {
     try {
       // Inserindo usuario no banco de dados
       const { data } = await axios.post("/api/cadastro/usuario", formData);
-      console.log(data);
     } catch (error: any) {
       setLoading(false);
       return toast.error(error?.response.data.message);

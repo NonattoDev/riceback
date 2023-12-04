@@ -29,7 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const latitude = resGeocode[0]?.latitude;
       const longitude = resGeocode[0]?.longitude;
 
-      console.log(resGeocode, latitude, longitude);
 
       const Cliente = await db("clientes")
         .insert({

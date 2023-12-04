@@ -6,7 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     const { CodCli, restauranteId } = req.body;
 
-    console.log(CodCli, restauranteId);
     try {
       const inserirServico = await db("servico1")
         .insert({
@@ -17,8 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           Hora: moment().format("HH:mm"),
         })
         .returning("Lanc");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.message);
       return res.status(500).json({ message: "Erro ao inserir o serviço" });
     }
 

@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 
 const Header: React.FC = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 z-50 relative">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
               <Link href={"/"}>Página Inicial</Link>
             </li>
             <li>
-              <Link href="mailto:robsonnonatoiii@gmail.comsubject=Vim do RiceBack&body=Corpo do Email">Contato</Link>
+              <Link href="mailto:robsonnonatoiii@gmail.com">Contato</Link>
             </li>
             <li>
               <Link href={"/sobre"}>Sobre</Link>

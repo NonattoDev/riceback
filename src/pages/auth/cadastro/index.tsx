@@ -10,25 +10,33 @@ const CadastroPage: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center">Cadastro</h1>
-        <div className="flex mb-4 justify-center">
-          <div className="mr-4">
-            <input type="radio" id="cliente" name="cadastroOption" value="cliente" checked={selectedOption === "cliente"} onChange={() => handleOptionChange("cliente")} />
-            <label htmlFor="cliente" className="ml-2">
-              Cliente
-            </label>
+    <div className="flex justify-center items-center h-screen mt-16">
+      <div className="card bordered">
+        <div className="card-body">
+          <div className="flex justify-center">
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <input type="radio" name="cadastroOption" className="radio radio-primary" value="cliente" checked={selectedOption === "cliente"} onChange={() => handleOptionChange("cliente")} />
+                <span className="label-text ml-2">Cliente</span>
+              </label>
+            </div>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <input
+                  type="radio"
+                  name="cadastroOption"
+                  className="radio radio-primary"
+                  value="restaurante"
+                  checked={selectedOption === "restaurante"}
+                  onChange={() => handleOptionChange("restaurante")}
+                />
+                <span className="label-text ml-2">Restaurante</span>
+              </label>
+            </div>
           </div>
-          <div>
-            <input type="radio" id="restaurante" name="cadastroOption" value="restaurante" checked={selectedOption === "restaurante"} onChange={() => handleOptionChange("restaurante")} />
-            <label htmlFor="restaurante" className="ml-2">
-              Restaurante
-            </label>
-          </div>
+          {selectedOption === "cliente" && <ClienteCadastro />}
+          {selectedOption === "restaurante" && <RestauranteCadastro />}
         </div>
-        {selectedOption === "cliente" && <ClienteCadastro />}
-        {selectedOption === "restaurante" && <RestauranteCadastro />}
       </div>
     </div>
   );

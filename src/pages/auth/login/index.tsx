@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const LoginPage: React.FC = () => {
   const { data: session, status } = useSession();
@@ -64,8 +64,13 @@ const LoginPage: React.FC = () => {
               </button>
             </div>
           </form>
-          <div className="flex justify-center mt-4">
-            <Link href={`/auth/cadastro`}>Criar conta</Link>
+          <div className="flex justify-center mt-4 gap-4">
+            <Link className="link link-primary" href={`/auth/cadastro`}>
+              Criar conta
+            </Link>
+            <Link className="link link-info" href={`/auth/esqueciminhasenha`}>
+              Esqueci minha senha
+            </Link>
           </div>
         </div>
       </div>

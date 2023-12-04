@@ -6,6 +6,7 @@ import buscarEnderecoPorCEP from "@/utils/CEP/BuscaCEP";
 import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
+import validarCNPJ from "@/utils/CNPJ/validaCNPJ";
 
 const RestauranteCadastro: React.FC = () => {
   const router = useRouter();
@@ -35,7 +36,15 @@ const RestauranteCadastro: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (formData.bairro.length > 25) return toast.error(`O campo bairro deve ter no máximo 25 caracteres e não ${formData.bairro.length}`);
+    try {
+      validarCNPJ(formData.CGC);
+    } catch (error: any) {
+      setLoading(false);
+      toast.error(error?.message);
+      return;
+    }
+
+    if (formData?.bairro?.length > 25) return toast.error(`O campo bairro deve ter no máximo 25 caracteres e não ${formData.bairro.length}`);
 
     if (Object.values(formData).some((value) => !value)) {
       setLoading(false);
@@ -52,27 +61,9 @@ const RestauranteCadastro: React.FC = () => {
     try {
       // Inserindo usuario no banco de dados
       const { data } = await axios.post("/api/cadastro/restaurante", formData);
-      console.log(data);
     } catch (error: any) {
       return toast.error(error?.response.data.message);
     }
-
-    // setFormData({
-    //   CGC: "",
-    //   Cliente: "",
-    //  Razao: "",
-    //   IE: "",
-    //   dataNascimento: "",
-    //   numero: "",
-    //   endereco: "",
-    //   bairro: "",
-    //   cidade: "",
-    //   estado: "",
-    //   cep: "",
-    //   telefone: "",
-    //   email: "",
-    //   senha: "",
-    // });
     setLoading(false);
     toast.success("Cadastro realizado com sucesso");
     return router.push("/auth/login");
@@ -98,8 +89,11 @@ const RestauranteCadastro: React.FC = () => {
 
   const handleCNPJBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
     const cnpj = e.target.value.replace(/[^0-9]/g, ""); // Remove caracteres não numéricos
-    if (cnpj.length !== 14) {
-      return toast.error("CNPJ inválido");
+    try {
+      validarCNPJ(cnpj);
+    } catch (error: any) {
+      toast.error(error?.message);
+      return;
     }
 
     try {

@@ -49,51 +49,59 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
   if (error) return <div>Erro ao carregar contribuições</div>;
 
   return (
-    <div className="p-4 bg-base-200 rounded-lg shadow mt-5">
-      <table className="table w-full">
+    <div className="overflow-x-auto w-full my-2.5">
+      <table className="table w-full overflow-x-auto">
         <thead>
           <tr className="bg-base-300 text-base-content">
             <th>ID</th>
             <th>Restaurante</th>
             <th>Data</th>
+            <th>Hora</th>
             <th>Produto</th>
             <th>Observação</th>
           </tr>
         </thead>
+        {/* Corpo da Tabela */}
         <tbody>
           {contribuicoes?.map((contribuicao) => (
-            <tr key={contribuicao.Lanc} className={contribuicao.Transito ? "bg-orange-500" : ""}>
+            <tr key={contribuicao.Lanc} className={contribuicao.Transito ? "bg-warning" : ""}>
               <td>{contribuicao.Lanc}</td>
               <td>{contribuicao.NomeRestaurante}</td>
               <td>{moment(contribuicao.Data).format("DD/MM/YY")}</td>
+              <td>{moment(contribuicao.Hora, "hh:mm").format("hh:mm")}</td>
               <td>
                 {contribuicao.CodPro === 1 ? (
-                  <span className="flex items-center gap-2">
-                    <FaLeaf className="text-green-500" />
+                  <div className="flex items-center gap-2">
+                    <FaLeaf className="text-success" />
                     Arroz Social
-                  </span>
+                  </div>
                 ) : (
-                  <span className="flex items-center gap-2">
-                    <FaUtensils className="text-blue-500" />
+                  <div className="flex items-center gap-2">
+                    <FaUtensils className="text-primary" />
                     Outro Produto
-                  </span>
+                  </div>
                 )}
               </td>
               <td>{contribuicao.Transito}</td>
             </tr>
           ))}
         </tbody>
+        {/* Rodapé da Tabela */}
         <tfoot>
-          <div className="flex justify-between mt-4">
-            <div className="btn-group">
-              <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} className="btn">
-                «
-              </button>
-              <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage >= totalPages} className="btn">
-                »
-              </button>
-            </div>
-          </div>
+          <tr>
+            <td colSpan={5}>
+              <div className="flex justify-between mt-4">
+                <div className="btn-group">
+                  <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} className="btn">
+                    «
+                  </button>
+                  <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage >= totalPages} className="btn">
+                    »
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
         </tfoot>
       </table>
     </div>

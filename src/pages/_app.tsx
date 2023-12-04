@@ -21,9 +21,11 @@ export default function App({ Component, pageProps }: EnhancedAppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
-        <Header />
-        <Component {...pageProps} />
-        <ToastContainer />
+        <>
+          <Header />
+          <Component {...pageProps} />
+          <ToastContainer />
+        </>
       </QueryClientProvider>
     </SessionProvider>
   );
