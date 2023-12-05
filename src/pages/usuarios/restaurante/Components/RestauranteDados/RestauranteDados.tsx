@@ -3,16 +3,17 @@ import User from "@/types/User";
 import InputMask from "react-input-mask";
 import buscarEnderecoPorCEP from "@/utils/CEP/BuscaCEP";
 import { toast } from "react-toastify";
-import validarCPF from "@/utils/CadastroCliente/validarCPF";
 import { FaPencilAlt, FaSave } from "react-icons/fa";
 import axios from "axios";
+import validarCNPJ from "@/utils/CNPJ/validaCNPJ";
 import { signOut, useSession } from "next-auth/react";
+import verificarSenha from "@/utils/CadastroCliente/verificarSenha";
 
 interface UsuarioProps {
   Usuario: User;
 }
 
-const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
+const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   const { data: session, status } = useSession();
   const [isEditable, setIsEditable] = useState(false);
   const [user, setUser] = useState<User>(Usuario);
@@ -26,6 +27,13 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
 
     if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
 
+    try {
+      verificarSenha(user.Chave);
+    } catch (error: any) {
+      toast.error(error.message);
+      return;
+    }
+
     const dadosTratados = {
       ...user,
       CPF: user?.CPF?.replace(".", ""),
@@ -35,20 +43,19 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
 
     try {
       const response = await axios.put(`/api/meuperfil/usuario/usuario`, dadosTratados);
+      toast.success("Dados atualizados com sucesso!");
+      setIsEditable(false);
 
       //Verificar se o email mudou, se mudou, forcar logout
       if (session?.user?.email !== user?.EMail) {
         toast.info("Por motivos de segurança, você será deslogado!");
         signOut();
       }
+
+      return;
     } catch (error: any) {
       return toast.error(error.message);
     }
-
-    // Lógica para editar o usuário
-    toast.success("Dados atualizados com sucesso!");
-
-    setIsEditable(false);
   };
 
   const handleBlurCep = async (cep: string) => {
@@ -86,18 +93,18 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           </label>
           <input type="email" className="input input-bordered w-full" value={user.EMail} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, EMail: e.target.value }))} />
           <label className="label">
-            <span className="label-text">CPF</span>
+            <span className="label-text">CNPJ</span>
           </label>
           <InputMask
-            mask="999.999.999-99"
+            mask="99.999.999/9999-99"
             className="input input-bordered w-full"
             type="text"
-            value={user.CPF}
+            value={user.CGC}
             disabled={!isEditable}
-            onChange={(e) => setUser((prevUser) => ({ ...prevUser, CPF: e.target.value }))}
+            onChange={(e) => setUser((prevUser) => ({ ...prevUser, CGC: e.target.value }))}
             onBlur={(e) => {
               try {
-                validarCPF(e.target.value);
+                validarCNPJ(e.target.value);
               } catch (error: any) {
                 toast.error(error.message);
               }
@@ -111,9 +118,24 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             <span className="label-text">Cidade</span>
           </label>
           <input type="text" className="input input-bordered w-full" value={user.Cidade} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cidade: e.target.value }))} />
+          <label className="label">
+            <span className="label-text">Telefone</span>
+          </label>
+          <InputMask
+            mask="(99) 99999-9999"
+            className="input input-bordered w-full"
+            type="text"
+            value={user.Tel}
+            disabled={!isEditable}
+            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
+          />
         </div>
         {/* Coluna 2*/}
         <div className="form-control">
+          <label className="label">
+            <span className="label-text">Razão Social</span>
+          </label>
+          <input type="text" className="input input-bordered w-full" value={user.Razao} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cliente: e.target.value }))} />
           <label className="label">
             <span className="label-text">CEP</span>
           </label>
@@ -154,17 +176,6 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Estado: e.target.value }))}
           />
           <label className="label">
-            <span className="label-text">Telefone</span>
-          </label>
-          <InputMask
-            mask={"(99) 99999-9999"}
-            className="input input-bordered w-full"
-            type="text"
-            value={user.Tel}
-            disabled={!isEditable}
-            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
-          />
-          <label className="label">
             <span className="label-text">Senha</span>
           </label>
           <input
@@ -192,4 +203,4 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   );
 };
 
-export default ClienteDados;
+export default RestauranteDados;

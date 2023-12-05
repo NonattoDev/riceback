@@ -1,5 +1,5 @@
 export default interface User {
-  CodCli?: number;
+  CodCli: number;
   CodUsu?: number;
   Cliente?: string;
   Razao?: string;
@@ -25,7 +25,7 @@ export default interface User {
   IE?: string;
   DataCad?: string;
   Situacao?: string;
-  Chave?: string;
+  Chave: string;
   EMail?: string;
   Numero?: string;
   Latitude?: string;

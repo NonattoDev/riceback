@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const restaurantesProximos = restaurantes.filter((restaurante) => {
         const distancia = calcularDistancia(latitude, longitude, restaurante.Latitude, restaurante.Longitude);
-        return distancia <= 0.05; // Supondo que você quer verificar dentro de 50 metros, que é aproximadamente 0.02 km.
+        return distancia <= 0.05; // Supondo que você quer verificar dentro de 50 metros, que é aproximadamente 0.05 km.
       });
 
       return res.status(200).json(restaurantesProximos);

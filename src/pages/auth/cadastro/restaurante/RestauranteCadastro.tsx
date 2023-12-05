@@ -44,7 +44,14 @@ const RestauranteCadastro: React.FC = () => {
       return;
     }
 
-    if (formData?.bairro?.length > 25) return toast.error(`O campo bairro deve ter no máximo 25 caracteres e não ${formData.bairro.length}`);
+    if (formData?.bairro?.length > 25) {
+      setLoading(false);
+      return toast.error(`O campo bairro deve ter no máximo 25 caracteres e não ${formData.bairro.length}`);
+    }
+    if (formData.telefone.length > 15) {
+      setLoading(false);
+      return toast.error(`O campo telefone deve ter no máximo 15 caracteres e não ${formData.telefone.length}`);
+    }
 
     if (Object.values(formData).some((value) => !value)) {
       setLoading(false);
@@ -62,6 +69,7 @@ const RestauranteCadastro: React.FC = () => {
       // Inserindo usuario no banco de dados
       const { data } = await axios.post("/api/cadastro/restaurante", formData);
     } catch (error: any) {
+      setLoading(false);
       return toast.error(error?.response.data.message);
     }
     setLoading(false);
@@ -152,7 +160,7 @@ const RestauranteCadastro: React.FC = () => {
           <label htmlFor="senha" className="block text-sm font-medium text-gray-700">
             Senha
           </label>
-          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" maxLength={10} max={10} />
+          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" maxLength={10} />
         </div>
 
         <div>

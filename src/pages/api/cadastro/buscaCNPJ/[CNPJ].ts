@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { data } = await axios.get(`https://www.receitaws.com.br/v1/cnpj/${CNPJ}`);
       return res.status(200).json(data);
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error);
       return res.status(400).json({ error: "CNPJ não encontrado" });
     }
   }
