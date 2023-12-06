@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "@/components/Header/Header";
+import Head from "next/head";
 
 type EnhancedAppProps = AppProps & {
   Component: NextComponentType;
@@ -22,6 +23,9 @@ export default function App({ Component, pageProps }: EnhancedAppProps) {
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <>
+          <Head>
+            <title>Riceback</title>
+          </Head>
           <Header />
           <Component {...pageProps} />
           <ToastContainer />

@@ -76,29 +76,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .where("EMail", email)
         .returning("CodCli");
 
-      // Enviar email com o código
-      transporter.sendMail({
-        from: {
-          name: "Soft - RiceBack",
-          address: process.env.GMAIL_LOGIN as string,
-        },
-        to: email,
-        subject: "Recuperação de Senha",
-        html: `
-            <div style="font-family: Arial, sans-serif; color: #333;">
-              <h2 style="color: #4F46E5;">Recuperação de Senha</h2>
-              <p>Olá,</p>
-              <p>Você solicitou a recuperação de senha na Soft - RiceBack. Use o código abaixo para prosseguir com a redefinição de sua senha:</p>
-              <div style="margin: 20px 0; text-align: center;">
-                <span style="font-size: 20px; padding: 10px 15px; border: 1px solid #4F46E5; color: #4F46E5; border-radius: 4px;">${verificationCode}</span>
-              </div>
-              <p>Este código é válido por 10 minutos. Se você não solicitou uma recuperação de senha, por favor, ignore este e-mail.</p>
-              <p>Atenciosamente,</p>
-              <p><strong>Equipe Soft - RiceBack</strong></p>
+      transporter
+        .sendMail({
+          from: {
+            name: "Soft - RiceBack",
+            address: process.env.GMAIL_LOGIN as string,
+          },
+          to: email,
+          subject: "Recuperação de Senha",
+          html: `
+          <div style="font-family: Arial, sans-serif; color: #333;">
+            <h2 style="color: #4F46E5;">Recuperação de Senha</h2>
+            <p>Olá,</p>
+            <p>Você solicitou a recuperação de senha na Soft - RiceBack. Use o código abaixo para prosseguir com a redefinição de sua senha:</p>
+            <div style="margin: 20px 0; text-align: center;">
+              <span style="font-size: 20px; padding: 10px 15px; border: 1px solid #4F46E5; color: #4F46E5; border-radius: 4px;">${verificationCode}</span>
             </div>
-          `,
-      });
+            <p>Este código é válido por 10 minutos. Se você não solicitou uma recuperação de senha, por favor, ignore este e-mail.</p>
+            <p>Atenciosamente,</p>
+            <p><strong>Equipe Soft - RiceBack</strong></p>
+          </div>
+        `,
+        })
+        .then((info) => {
+          console.log("Email enviado com sucesso: ", info);
+        })
+        .catch((error) => {
+          console.error("Erro ao enviar email: ", error);
+        });
 
+      console.log("Token: ", verificationCode);
       return res.status(200).json({ message: `Email ${email} recebido com sucesso!` });
     } catch (error) {
       console.log(error);
