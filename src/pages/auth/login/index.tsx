@@ -12,6 +12,7 @@ const LoginPage: React.FC = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
@@ -30,6 +31,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async () => {
     if (!login || !password) return toast.warn("Preencha todos os campos");
+    setLoading(true);
 
     const result = await signIn("credentials", {
       redirect: false,
@@ -38,9 +40,11 @@ const LoginPage: React.FC = () => {
     });
 
     if (result?.error) {
+      setLoading(false);
       return toast.error(result.error);
     } else {
       toast.success("Login realizado com sucesso");
+      return;
     }
   };
 
@@ -53,7 +57,7 @@ const LoginPage: React.FC = () => {
             <form>
               <div className="form-control">
                 <label className="label" htmlFor="login">
-                  <span className="label-text">Email ou Usuário</span>
+                  <span className="label-text">Email</span>
                 </label>
                 <input type="text" id="login" className="input input-bordered" value={login} onChange={(e) => setLogin(e.target.value)} />
               </div>
@@ -64,9 +68,15 @@ const LoginPage: React.FC = () => {
                 <input type="password" id="password" className="input input-bordered" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
               <div className="form-control mt-6">
-                <button type="button" className="btn btn-primary" onClick={handleLogin}>
-                  Login
-                </button>
+                {loading ? (
+                  <button type="button" className="btn btn-primary" disabled>
+                    <span className="loading loading-ring loading-md"></span>
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-primary" onClick={handleLogin}>
+                    Login
+                  </button>
+                )}
               </div>
             </form>
             <div className="flex justify-center mt-4 gap-4">

@@ -90,38 +90,38 @@ const ClienteCadastro: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+    <form onSubmit={handleSubmit} className="card w-auto bg-base-100 shadow-xl p-6 rounded-lg">
       <h2 className="text-2xl mb-4 text-center">Cadastro de Cliente</h2>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">
-            CPF
+          <label htmlFor="cpf" className="label">
+            <span className="label-text">CPF</span>
           </label>
-          <InputMask mask="999999999-99" name="cpf" id="cpf" value={formData.cpf} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <InputMask mask="999999999-99" name="cpf" id="cpf" value={formData.cpf} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
-            Nome
+          <label htmlFor="nome" className="label">
+            <span className="label-text">Nome</span>
           </label>
-          <input type="text" name="nome" id="nome" value={formData.nome} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
-        </div>
-
-        <div>
-          <label htmlFor="senha" className="block text-sm font-medium text-gray-700">
-            Senha
-          </label>
-          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" maxLength={10} max={10} />
+          <input type="text" name="nome" id="nome" value={formData.nome} onChange={handleChange} className="input input-bordered" />
         </div>
 
         <div>
-          <label htmlFor="dataNascimento" className="block text-sm font-medium text-gray-700">
-            Data de Nascimento
+          <label htmlFor="senha" className="label">
+            <span className="label-text">Senha</span>
           </label>
-          <input type="date" name="dataNascimento" id="dataNascimento" value={formData.dataNascimento} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="input input-bordered" maxLength={10} max={10} />
+        </div>
+
+        <div>
+          <label htmlFor="dataNascimento" className="label">
+            <span className="label-text">Data de Nascimento</span>
+          </label>
+          <input type="date" name="dataNascimento" id="dataNascimento" value={formData.dataNascimento} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="cep" className="block text-sm font-medium text-gray-700">
-            CEP
+          <label htmlFor="cep" className="label">
+            <span className="label-text">CEP</span>
           </label>
           <InputMask
             mask="99999-999"
@@ -130,50 +130,50 @@ const ClienteCadastro: React.FC = () => {
             value={formData.cep}
             onChange={handleChange}
             onBlur={handleCepBlur} // Adiciona o evento onBlur
-            className="mt-1 p-2 border border-gray-300 rounded w-full"
+            className="input input-bordered"
           />
         </div>
         <div>
-          <label htmlFor="endereco" className="block text-sm font-medium text-gray-700">
-            Endereço
+          <label htmlFor="endereco" className="label">
+            <span className="label-text">Endereço</span>
           </label>
-          <input type="text" name="endereco" id="endereco" value={formData.endereco} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="text" name="endereco" id="endereco" value={formData.endereco} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="bairro" className="block text-sm font-medium text-gray-700">
-            Bairro
+          <label htmlFor="bairro" className="label">
+            <span className="label-text">Bairro</span>
           </label>
-          <input type="text" name="bairro" id="bairro" value={formData.bairro} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="text" name="bairro" id="bairro" value={formData.bairro} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="cidade" className="block text-sm font-medium text-gray-700">
-            Cidade
+          <label htmlFor="cidade" className="label">
+            <span className="label-text">Cidade</span>
           </label>
-          <input type="text" name="cidade" id="cidade" value={formData.cidade} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="text" name="cidade" id="cidade" value={formData.cidade} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="estado" className="block text-sm font-medium text-gray-700">
-            Estado
+          <label htmlFor="estado" className="label">
+            <span className="label-text">Estado</span>
           </label>
-          <input type="text" name="estado" id="estado" value={formData.estado} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="text" name="estado" id="estado" value={formData.estado} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="numero" className="block text-sm font-medium text-gray-700">
-            Número
+          <label htmlFor="numero" className="label">
+            <span className="label-text">Número</span>
           </label>
-          <input type="text" name="numero" id="numero" value={formData.numero} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="text" name="numero" id="numero" value={formData.numero} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
+          <label htmlFor="email" className="label">
+            <span className="label-text">Email</span>
           </label>
-          <input type="email" name="email" id="email" value={formData.email} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <input type="email" name="email" id="email" value={formData.email} onChange={handleChange} className="input input-bordered" />
         </div>
         <div>
-          <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">
-            Telefone
+          <label htmlFor="telefone" className="label">
+            <span className="label-text">Telefone</span>
           </label>
-          <InputMask mask="(99)99999-9999" name="telefone" id="telefone" value={formData.telefone} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+          <InputMask mask="(99)99999-9999" name="telefone" id="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" />
         </div>
 
         {loading ? (
@@ -181,7 +181,7 @@ const ClienteCadastro: React.FC = () => {
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
           </button>
         ) : (
-          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2">
+          <button type="submit" className="btn btn-primary col-span-2">
             Cadastrar
           </button>
         )}
