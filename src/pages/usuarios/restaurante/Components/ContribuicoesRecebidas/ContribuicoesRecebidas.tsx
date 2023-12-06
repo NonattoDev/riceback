@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import { FaExclamationTriangle, FaLeaf, FaUtensils } from "react-icons/fa";
+import { FaBoxOpen, FaExclamationTriangle, FaLeaf, FaUtensils } from "react-icons/fa";
 import { useState } from "react";
 import moment from "moment";
 
@@ -35,6 +35,8 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contestacao, setContestacao] = useState("");
   const [lancamentoId, setLancamentoId] = useState<number | null>(null);
+  const [isTransitoModalOpen, setIsTransitoModalOpen] = useState(false);
+  const [transitoText, setTransitoText] = useState("");
   const {
     data: response,
     isLoading,
@@ -54,6 +56,12 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
   const handleContestar = (lancId: number) => {
     setLancamentoId(lancId);
     setIsModalOpen(true);
+  };
+
+  const handleOpenTransitoModal = (transitoText: string | undefined) => {
+    if (!transitoText) return toast.info("Erro ao carregar transito");
+    setTransitoText(transitoText);
+    setIsTransitoModalOpen(true);
   };
 
   const handleConfirmarContestacao = async () => {
@@ -81,6 +89,22 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
               </button>
               <button className="btn" onClick={() => setIsModalOpen(false)}>
                 Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isTransitoModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-2">Motivo do Contestamento</h3>
+            <textarea className="textarea textarea-bordered textarea-lg w-full max-w " readOnly>
+              {transitoText}
+            </textarea>
+
+            <div className="modal-action">
+              <button className="btn" onClick={() => setIsTransitoModalOpen(false)}>
+                Fechar
               </button>
             </div>
           </div>
@@ -119,10 +143,8 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
                   </div>
                 )}
               </td>
-              <td>{contribuicao.Transito}</td>
-              <td>
-                <FaExclamationTriangle cursor="pointer" onClick={() => handleContestar(contribuicao.Lanc)} />
-              </td>
+              <td>{contribuicao.Transito && contribuicao.Transito !== "" && <FaBoxOpen cursor="pointer" onClick={() => handleOpenTransitoModal(contribuicao.Transito)} />}</td>
+              <td>{!contribuicao.Transito && <FaExclamationTriangle cursor="pointer" onClick={() => handleContestar(contribuicao.Lanc)} />}</td>
             </tr>
           ))}
         </tbody>

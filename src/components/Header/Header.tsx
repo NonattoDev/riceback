@@ -3,8 +3,18 @@ import React from "react";
 import Link from "next/link";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const Header: React.FC = () => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading")
+    return (
+      <div className="navbar bg-base-100 z-50 relative">
+        <span className="loading loading-ring loading-md"></span>
+      </div>
+    );
+
   return (
     <div className="navbar bg-base-100 z-50 relative">
       <div className="navbar-start">
@@ -16,10 +26,10 @@ const Header: React.FC = () => {
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
-              <Link href={"/"}>Página Inicial</Link>
+              <Link href={`/`}>Página Inicial</Link>
             </li>
             <li>
-              <Link href="mailto:robsonnonatoiii@gmail.com">Contato</Link>
+              <Link href={`mailto:${process.env.NEXT_PUBLIC_EMAIL_RECEIVER}`}>Contato</Link>
             </li>
             <li>
               <Link href={"/sobre"}>Sobre</Link>

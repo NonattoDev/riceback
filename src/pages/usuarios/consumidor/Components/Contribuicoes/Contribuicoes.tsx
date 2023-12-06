@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import { FaLeaf, FaUtensils } from "react-icons/fa";
+import { FaBoxOpen, FaLeaf, FaUtensils } from "react-icons/fa";
 import { useState } from "react";
 import moment from "moment";
 
@@ -32,6 +32,8 @@ const fetchContribuicoes = async (CodCli: number, page: number) => {
 
 const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isTransitoModalOpen, setIsTransitoModalOpen] = useState(false);
+  const [transitoText, setTransitoText] = useState("");
   const {
     data: response,
     isLoading,
@@ -48,8 +50,29 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
   if (isLoading) return <span className="loading loading-ring loading-md"></span>;
   if (error) return <div>Erro ao carregar contribuições</div>;
 
+  const handleOpenTransitoModal = (transitoText: string | undefined) => {
+    if (!transitoText) return toast.info("Erro ao carregar transito");
+    setTransitoText(transitoText);
+    setIsTransitoModalOpen(true);
+  };
+
   return (
     <div className="overflow-x-auto w-full my-2.5">
+      {isTransitoModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Motivo do Contestamento</h3>
+            <textarea className="textarea textarea-bordered textarea-lg w-full max-w" readOnly>
+              {transitoText}
+            </textarea>
+            <div className="modal-action">
+              <button className="btn" onClick={() => setIsTransitoModalOpen(false)}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <table className="table w-full overflow-x-auto">
         <thead>
           <tr className="bg-base-300 text-base-content">
@@ -82,7 +105,7 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
                   </div>
                 )}
               </td>
-              <td>{contribuicao.Transito}</td>
+              <td>{contribuicao.Transito && contribuicao.Transito !== "" && <FaBoxOpen cursor="pointer" onClick={() => handleOpenTransitoModal(contribuicao.Transito)} />}</td>
             </tr>
           ))}
         </tbody>
