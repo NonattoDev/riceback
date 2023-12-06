@@ -24,7 +24,7 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
       return toast.error("Preencha todos os campos!");
     }
 
-    if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
+    if (user?.Bairro?.length && user?.Bairro.length > 25) return toast.error("Endereço muito longo!");
 
     const dadosTratados = {
       ...user,
@@ -92,7 +92,7 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             mask="999.999.999-99"
             className="input input-bordered w-full"
             type="text"
-            value={user.CPF}
+            value={user?.CPF}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, CPF: e.target.value }))}
             onBlur={(e) => {
