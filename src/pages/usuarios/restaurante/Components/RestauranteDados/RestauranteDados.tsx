@@ -87,11 +87,11 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           <label className="label">
             <span className="label-text">Cliente</span>
           </label>
-          <input type="text" className="input input-bordered w-full" value={user.Cliente} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cliente: e.target.value }))} />
+          <input type="text" className="input input-bordered w-full" value={user?.Cliente} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cliente: e.target.value }))} />
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" className="input input-bordered w-full" value={user.EMail} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, EMail: e.target.value }))} />
+          <input type="email" className="input input-bordered w-full" value={user?.EMail} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, EMail: e.target.value }))} />
           <label className="label">
             <span className="label-text">CNPJ</span>
           </label>
@@ -99,7 +99,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             mask="99.999.999/9999-99"
             className="input input-bordered w-full"
             type="text"
-            value={user.CGC}
+            value={user?.CGC}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, CGC: e.target.value }))}
             onBlur={(e) => {
@@ -113,11 +113,11 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           <label className="label">
             <span className="label-text">Bairro</span>
           </label>
-          <input type="text" className="input input-bordered w-full" value={user.Bairro} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Bairro: e.target.value }))} />
+          <input type="text" className="input input-bordered w-full" value={user?.Bairro} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Bairro: e.target.value }))} />
           <label className="label">
             <span className="label-text">Cidade</span>
           </label>
-          <input type="text" className="input input-bordered w-full" value={user.Cidade} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cidade: e.target.value }))} />
+          <input type="text" className="input input-bordered w-full" value={user?.Cidade} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cidade: e.target.value }))} />
           <label className="label">
             <span className="label-text">Telefone</span>
           </label>
@@ -125,7 +125,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             mask="(99) 99999-9999"
             className="input input-bordered w-full"
             type="text"
-            value={user.Tel}
+            value={user?.Tel}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
           />
@@ -135,7 +135,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           <label className="label">
             <span className="label-text">Razão Social</span>
           </label>
-          <input type="text" className="input input-bordered w-full" value={user.Razao} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cliente: e.target.value }))} />
+          <input type="text" className="input input-bordered w-full" value={user?.Razao} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cliente: e.target.value }))} />
           <label className="label">
             <span className="label-text">CEP</span>
           </label>
@@ -143,7 +143,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             mask="99999-999"
             className="input input-bordered w-full"
             type="text"
-            value={user.Cep}
+            value={user?.Cep}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cep: e.target.value }))}
             onBlur={(e) => handleBlurCep(e.target.value)}
@@ -154,14 +154,14 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           <input
             type="text"
             className="input input-bordered w-full"
-            value={user.Endereco}
+            value={user?.Endereco}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Endereco: e.target.value }))}
           />
           <label className="label">
             <span className="label-text">Número</span>
           </label>
-          <input type="text" className="input input-bordered w-full" value={user.Numero} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Numero: e.target.value }))} />
+          <input type="text" className="input input-bordered w-full" value={user?.Numero} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Numero: e.target.value }))} />
           <label className="label">
             <span className="label-text">Estado</span>
           </label>
@@ -171,7 +171,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             placeholder="UF"
             maskChar={null}
             type="text"
-            value={user.Estado}
+            value={user?.Estado}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Estado: e.target.value }))}
           />
@@ -181,7 +181,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
           <input
             className="input input-bordered w-full"
             type="password"
-            value={user.Chave}
+            value={user?.Chave}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
             maxLength={10}
