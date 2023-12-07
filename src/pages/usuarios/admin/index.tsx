@@ -1,29 +1,51 @@
-import React, { useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
+import User from "@/types/User";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import db from "@/db/db";
+import AdminDados from "./Components/AdminDados";
+import ContribuicoesGeral from "./Components/ContribuicoesGeral";
 
-const AdminPage: React.FC = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      toast.warn("Você precisa estar logado para acessar essa página");
-      return router.push("/auth/login");
-    },
-  });
-
-  useEffect(() => {
-    if (session) {
-      if (!session.user?.admin) router.push("/auth/login");
-    }
-  }, [session, router, status]);
+const ClientePage: React.FC<{ user: string }> = (props) => {
+  const [user, setUser] = useState<User>(JSON.parse(props.user));
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <h2 className="text-4xl font-bold">Página do Administrador</h2>
+    <div className="flex flex-col justify-center items-center m-5">
+      <AdminDados Usuario={user} />
+      <ContribuicoesGeral />
     </div>
   );
 };
 
-export default AdminPage;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  if (!session.user?.admin) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const user: User = await db("senha").where("email", session.user?.email).select("CodUsu", "Email", "Usuario", "Senha").first();
+
+  return {
+    props: {
+      user: JSON.stringify(user),
+    },
+  };
+}
+
+export default ClientePage;

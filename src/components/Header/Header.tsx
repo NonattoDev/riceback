@@ -38,7 +38,9 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <button className="btn btn-ghost text-xl">Rice Back</button>
+        <Link href={`/`} className="btn btn-ghost text-xl">
+          Rice Back
+        </Link>
       </div>
       <div className="navbar-end">
         <label className="cursor-pointer grid place-items-center mr-4 ">

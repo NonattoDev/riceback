@@ -2,6 +2,7 @@ export default interface User {
   CodCli: number;
   CodUsu?: number;
   Cliente?: string;
+  Usuario?: string;
   Razao?: string;
   Complemento?: string;
   Caminho?: string;
@@ -27,7 +28,9 @@ export default interface User {
   Situacao?: string;
   Chave: string;
   EMail?: string;
+  Email?: string;
   Numero?: string;
+  Senha?: string;
   Latitude?: string;
   Longitude?: string;
 }
