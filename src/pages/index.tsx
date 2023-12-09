@@ -17,7 +17,7 @@ export default function Home() {
     );
 
   if (session) {
-    segmento = session?.user?.segmento ? session?.user?.segmento : "admin";
+    segmento = session?.user?.segmento ? session?.user?.segmento : "Administrador";
   }
 
   return (

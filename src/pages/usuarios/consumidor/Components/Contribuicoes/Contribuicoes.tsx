@@ -91,7 +91,7 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
               <td>{contribuicao.Lanc}</td>
               <td>{contribuicao.NomeRestaurante}</td>
               <td>{moment(contribuicao.Data).format("DD/MM/YY")}</td>
-              <td>{moment(contribuicao.Hora, "hh:mm").format("hh:mm")}</td>
+              <td>{moment(contribuicao.Hora, "HH:mm").format("HH:mm")}</td>
               <td>
                 {contribuicao.CodPro === 1 ? (
                   <div className="flex items-center gap-2">
