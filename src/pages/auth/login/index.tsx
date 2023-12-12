@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
     if (status === "loading") return;
     if (session) {
       if (session?.user?.admin) {
-        router.push("/usuarios/admin");
+        router.push("/usuarios/administrador");
       } else if (session?.user?.segmento === "Restaurante") {
         router.push("/usuarios/restaurante");
       } else if (session?.user?.segmento === "Consumidor") {
