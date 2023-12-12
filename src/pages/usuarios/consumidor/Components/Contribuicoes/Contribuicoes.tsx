@@ -19,6 +19,7 @@ interface Contribuicao {
   CodCli: number;
   NomeRestaurante: string;
   Transito?: string;
+  Preco?: number;
 }
 
 const fetchContribuicoes = async (CodCli: number, page: number) => {
@@ -81,6 +82,7 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
             <th>Data</th>
             <th>Hora</th>
             <th>Produto</th>
+            <th>Preco Pago</th>
             <th>Observação</th>
           </tr>
         </thead>
@@ -104,6 +106,14 @@ const Contribuicoes: React.FC<ContribuicoesProps> = ({ CodCli }) => {
                     Outro Produto
                   </div>
                 )}
+              </td>
+              <td>
+                {contribuicao?.Preco?.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                  currency: "BRL",
+                  style: "currency",
+                })}
               </td>
               <td>{contribuicao.Transito && contribuicao.Transito !== "" && <FaBoxOpen cursor="pointer" onClick={() => handleOpenTransitoModal(contribuicao.Transito)} />}</td>
             </tr>

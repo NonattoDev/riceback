@@ -16,6 +16,8 @@ interface Contribuicao {
   NomeRestaurante: string;
   NomeCliente: string;
   Transito?: string;
+  Preco?: number;
+  Percentual?: number;
 }
 
 const ContribuicoesGeral: React.FC = () => {
@@ -144,6 +146,7 @@ const ContribuicoesGeral: React.FC = () => {
             <th className="text-center align-middle">Hora</th>
             <th className="text-center align-middle">Produto</th>
             <th className="text-center align-middle">Valor</th>
+            <th className="text-center align-middle">Percentual</th>
             <th className="text-center align-middle">Observação</th>
             <th className="text-center align-middle">Ações</th>
           </tr>
@@ -165,7 +168,15 @@ const ContribuicoesGeral: React.FC = () => {
                   Outro Produto
                 </td>
               )}
-              <td className="text-center align-middle">10,00</td>
+              <td className="text-center align-middle">
+                {contribuicao?.Preco?.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                  currency: "BRL",
+                  style: "currency",
+                })}
+              </td>
+              <td>{contribuicao?.Percentual && `${contribuicao?.Percentual}%`}</td>
 
               <td className="text-center align-middle">
                 {contribuicao.Transito && contribuicao.Transito !== "" && (

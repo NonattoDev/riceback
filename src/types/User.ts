@@ -33,4 +33,16 @@ export default interface User {
   Senha?: string;
   Latitude?: string;
   Longitude?: string;
+  Produto1?: string;
+  PrecoProduto1: number;
+  Produto2?: string;
+  PrecoProduto2: number;
+  Produto3?: string;
+  PrecoProduto3: number;
+  Produto4?: string;
+  PrecoProduto4: number;
+  Produto5?: string;
+  PrecoProduto5: number;
+  Produto6?: string;
+  PrecoProduto6: number;
 }

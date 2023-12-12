@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           console.error("Erro ao enviar email: ", error);
         });
 
-      console.log("Token: ", verificationCode);
+      // console.log("Token: ", verificationCode);
       return res.status(200).json({ message: `Email ${email} recebido com sucesso!` });
     } catch (error) {
       console.log(error);

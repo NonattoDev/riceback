@@ -19,6 +19,8 @@ interface Contribuicao {
   CodCli: number;
   NomeCliente: string;
   Transito?: string;
+  Preco?: number;
+  Percentual?: number;
 }
 
 const fetchContribuicoes = async (CodCli: number, page: number) => {
@@ -118,6 +120,8 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
             <th>Data</th>
             <th>Hora</th>
             <th>Produto</th>
+            <th>Preço</th>
+            <th>Percentual</th>
             <th>Observação</th>
             <th>Ações</th>
           </tr>
@@ -143,6 +147,15 @@ const ContribuicoesRecebidas: React.FC<ContribuicoesProps> = ({ CodCli }) => {
                   </div>
                 )}
               </td>
+              <td>
+                {contribuicao?.Preco?.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                  currency: "BRL",
+                  style: "currency",
+                })}
+              </td>
+              <td>{contribuicao?.Percentual && `${contribuicao?.Percentual}%`}</td>
               <td>{contribuicao.Transito && contribuicao.Transito !== "" && <FaBoxOpen cursor="pointer" onClick={() => handleOpenTransitoModal(contribuicao.Transito)} />}</td>
               <td>{!contribuicao.Transito && <FaExclamationTriangle cursor="pointer" onClick={() => handleContestar(contribuicao.Lanc)} />}</td>
             </tr>

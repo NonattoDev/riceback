@@ -34,7 +34,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Executa a query final com limit e offset para paginação e ordenação
     const dataQuery = baseQuery
       .clone()
-      .select("servico1.Lanc", "servico1.CodPro", "servico1.Data", "servico1.Hora", "servico1.Transito", "c1.Cliente as NomeCliente", "c2.Cliente as NomeRestaurante")
+      .select(
+        "servico1.Lanc",
+        "servico1.CodPro",
+        "servico1.Data",
+        "servico1.Hora",
+        "servico1.Preco",
+        "servico1.Percentual",
+        "servico1.Transito",
+        "c1.Cliente as NomeCliente",
+        "c2.Cliente as NomeRestaurante"
+      )
       .orderBy("Lanc", "desc")
       .limit(parseInt(limit as string))
       .offset(offset);
@@ -42,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Executa ambas as queries
     const [totalContribuicoes, contribuicoes] = await Promise.all([totalQuery, dataQuery]);
 
-    console.log(totalContribuicoes, contribuicoes); // para depuração
+    // console.log(totalContribuicoes, contribuicoes); // para depuração
 
     return res.status(200).json({
       contribuicoes,

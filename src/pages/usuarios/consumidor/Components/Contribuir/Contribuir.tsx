@@ -12,7 +12,6 @@ const Contribuir: React.FC<UsuarioProps> = ({ Usuario }) => {
   const [user, setUser] = useState<User>(Usuario);
   const [restaurantesProximos, setRestaurantesProximos] = useState<User[]>([]); // Estado para armazenar os restaurantes próximos
   const [restauranteSelecionado, setRestauranteSelecionado] = useState(""); // Estado para armazenar o restaurante selecionado
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -51,7 +50,7 @@ const Contribuir: React.FC<UsuarioProps> = ({ Usuario }) => {
 
       if (response.status === 200) {
         setRestauranteSelecionado("");
-        toast.success(`Contribuição enviada com sucesso, parabéns por ajudar a ONG!🎉`);
+        toast.success(`Contribuição enviada com sucesso 🎉`);
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || error.message);

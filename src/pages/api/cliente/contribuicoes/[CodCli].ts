@@ -15,7 +15,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .orderBy("servico1.Lanc", "desc") // Adicione uma cláusula ORDER BY
       .limit(parseInt(limit as string))
       .offset(offset)
-      .select("servico1.Lanc", "servico1.CodPro", "servico1.Data", "servico1.Hora", "servico1.Hora", "servico1.Transito", "servico1.CodFor", "servico1.CodCli", "Clientes.Cliente as NomeRestaurante");
+      .select(
+        "servico1.Lanc",
+        "servico1.CodPro",
+        "servico1.Data",
+        "servico1.Hora",
+        "servico1.Hora",
+        "servico1.Transito",
+        "servico1.CodFor",
+        "servico1.CodCli",
+        "servico1.Preco",
+        "servico1.Percentual",
+        "Clientes.Cliente as NomeRestaurante"
+      );
 
     return res.status(200).json({
       contribuicoes: contribuicoes,
