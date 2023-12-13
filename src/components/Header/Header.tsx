@@ -78,7 +78,7 @@ const Header: React.FC = () => {
           </svg>
         </label>
         <button onClick={() => signOut()}>
-          <FaSignOutAlt size={20} className="mr-4" />
+          <FaSignOutAlt size={20} className="mr-6" />
         </button>
       </div>
     </div>
