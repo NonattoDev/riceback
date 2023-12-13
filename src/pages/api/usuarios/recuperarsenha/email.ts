@@ -76,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .where("EMail", email)
         .returning("CodCli");
 
-      transporter
+      await transporter
         .sendMail({
           from: {
             name: "Soft - RiceBack",

@@ -7,16 +7,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     const usuario = req.body;
 
-    // Verifica se o email já existe no banco de dados
-    if (await db("clientes").where("EMail", usuario.email).first()) return res.status(400).json({ message: "O email informado já está cadastrado nos nossos sistemas." });
-
-    // Verifica se o CPF já está cadastrado no banco de dados
-    if (await db("clientes").where("CPF", usuario.cpf).first()) return res.status(400).json({ message: "O CPF já está cadastrado" });
-
-    const ultimoCodCli = await db("Clientes").max("CodCli as CodCli").first();
-    let CodCli = ultimoCodCli?.CodCli + 1;
-
     try {
+      // Verifica se o email já existe no banco de dados
+      if (await db("clientes").where("EMail", usuario.email).first()) return res.status(400).json({ message: "O email informado já está cadastrado nos nossos sistemas." });
+
+      // Verifica se o CPF já está cadastrado no banco de dados
+      if (await db("clientes").where("CPF", usuario.cpf).first()) return res.status(400).json({ message: "O CPF já está cadastrado" });
+
+      const ultimoCodCli = await db("Clientes").max("CodCli as CodCli").first();
+      let CodCli = ultimoCodCli?.CodCli + 1;
+
       const Cliente = await db("clientes")
         .insert({
           CodCli,
@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .returning("*");
 
       try {
-        transporter.sendMail({
+        await transporter.sendMail({
           from: {
             name: "Soft - RiceBack",
             address: process.env.GMAIL_LOGIN as string,

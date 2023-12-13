@@ -29,7 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const latitude = resGeocode[0]?.latitude;
       const longitude = resGeocode[0]?.longitude;
 
-
       const Cliente = await db("clientes")
         .insert({
           CodCli,
@@ -58,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .returning("*");
 
       try {
-        transporter.sendMail({
+        await transporter.sendMail({
           from: {
             name: "Soft - RiceBack",
             address: process.env.GMAIL_LOGIN as string,
