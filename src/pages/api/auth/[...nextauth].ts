@@ -2,6 +2,7 @@ import db from "@/db/db";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { DefaultSession } from "next-auth";
+import transporter from "@/utils/NodeMailer/Transporter";
 
 declare module "next-auth" {
   interface User {
@@ -31,12 +32,112 @@ export const authOptions = {
         let user = await db("senha").where({ Usuario: login, Senha: senha }).first();
 
         if (user) {
+          try {
+            await transporter.sendMail({
+              from: {
+                name: "Soft - RiceBack",
+                address: process.env.GMAIL_LOGIN as string,
+              },
+              to: user.EMail,
+              subject: "Login Efetuado",
+              html: `
+              <!DOCTYPE html>
+              <html lang="pt-br">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                  body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f7f7f7; }
+                  .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; }
+                  .header { background-color: #4CAF50; padding: 20px; text-align: center; }
+                  .header h1 { color: #ffffff; margin: 0; }
+                  .content { padding: 30px 20px; text-align: center; }
+                  .content p { color: #555555; line-height: 1.5; font-size: 16px; }
+                  .button { background-color: #008CBA; color: #ffffff; padding: 15px 25px; text-align: center; text-decoration: none; display: inline-block; font-size: 18px; margin: 20px auto; cursor: pointer; border-radius: 5px; border: none; transition: background-color 0.3s; }
+                  .button:hover { background-color: #005f73; }
+                  .footer { background-color: #f1f1f1; padding: 15px 20px; text-align: center; }
+                  .footer p { color: #555555; font-size: 14px; margin: 0; }
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="header">
+                    <h1>Seu Login no RiceBack</h1>
+                  </div>
+                  <div class="content">
+                    <p>Olá, ${user.Usuario}</p>
+                    <p>Seu login foi realizado com sucesso. Se você não reconhece essa atividade, por favor entre em contato conosco imediatamente.</p>
+                    <a href="#" class="button">Verificar Atividade</a>
+                    <p>Cuide da sua segurança - nunca compartilhe suas credenciais de login.</p>
+                  </div>
+                  <div class="footer">
+                    <p>Soft - RiceBack © 2023. Todos os direitos reservados.</p>
+                  </div>
+                </div>
+              </body>
+              </html>              
+                `,
+            });
+            console.log("Email enviado com sucesso");
+          } catch (error) {
+            console.log(error);
+          }
           return user;
         }
 
         user = await db("clientes").where({ EMail: login, Chave: senha }).first();
 
         if (user) {
+          try {
+            await transporter.sendMail({
+              from: {
+                name: "Soft - RiceBack",
+                address: process.env.GMAIL_LOGIN as string,
+              },
+              to: user.EMail,
+              subject: "Login Efetuado",
+              html: `
+              <!DOCTYPE html>
+              <html lang="pt-br">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                  body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f7f7f7; }
+                  .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; }
+                  .header { background-color: #4CAF50; padding: 20px; text-align: center; }
+                  .header h1 { color: #ffffff; margin: 0; }
+                  .content { padding: 30px 20px; text-align: center; }
+                  .content p { color: #555555; line-height: 1.5; font-size: 16px; }
+                  .button { background-color: #008CBA; color: #ffffff; padding: 15px 25px; text-align: center; text-decoration: none; display: inline-block; font-size: 18px; margin: 20px auto; cursor: pointer; border-radius: 5px; border: none; transition: background-color 0.3s; }
+                  .button:hover { background-color: #005f73; }
+                  .footer { background-color: #f1f1f1; padding: 15px 20px; text-align: center; }
+                  .footer p { color: #555555; font-size: 14px; margin: 0; }
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="header">
+                    <h1>Seu Login no RiceBack</h1>
+                  </div>
+                  <div class="content">
+                    <p>Olá, ${user.Cliente}</p>
+                    <p>Seu login foi realizado com sucesso. Se você não reconhece essa atividade, por favor entre em contato conosco imediatamente.</p>
+                    <a href="#" class="button">Verificar Atividade</a>
+                    <p>Cuide da sua segurança - nunca compartilhe suas credenciais de login.</p>
+                  </div>
+                  <div class="footer">
+                    <p>Soft - RiceBack © 2023. Todos os direitos reservados.</p>
+                  </div>
+                </div>
+              </body>
+              </html>              
+                `,
+            });
+            console.log("Email enviado com sucesso");
+          } catch (error) {
+            console.log(error);
+          }
           return user;
         }
 
