@@ -21,9 +21,9 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   // Função para lidar com a edição do usuário
   const handleEdit = async () => {
     // Verificar se algum campo está vazio
-    if (Object.values(user).some((value) => value === "")) {
+
+    if (!user?.Cliente || !user?.EMail || !user?.CGC || !user?.Cep || !user?.Endereco || !user?.Numero || !user?.Bairro || !user?.Cidade || !user?.Estado || !user?.Tel || !user?.Chave)
       return toast.error("Preencha todos os campos!");
-    }
 
     if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
 

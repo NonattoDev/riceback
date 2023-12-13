@@ -31,10 +31,26 @@ const ClienteCadastro: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    if (Object.values(formData).some((value) => !value)) {
+
+    if (
+      !formData.cpf ||
+      !formData.nome ||
+      !formData.dataNascimento ||
+      !formData.endereco ||
+      !formData.numero ||
+      !formData.bairro ||
+      !formData.cidade ||
+      !formData.estado ||
+      !formData.cep ||
+      !formData.telefone ||
+      !formData.email ||
+      !formData.senha
+    ) {
       setLoading(false);
-      return toast.warn("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
+      return;
     }
+
     try {
       validarCPF(formData.cpf);
       verificarSenha(formData.senha);

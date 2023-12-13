@@ -39,9 +39,9 @@ const Header: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="navbar-center">
-        <Link href={`/`} className="btn btn-ghost text-xl">
-          <Image src={logo} alt="Riceback" width={50} height={50} />
+      <div className="navbar-center flex items-center">
+        <Link href={`/`} style={{ margin: "-15px" }}>
+          <Image src={logo} alt="Riceback" width={80} height={80} />
         </Link>
       </div>
       <div className="navbar-end">

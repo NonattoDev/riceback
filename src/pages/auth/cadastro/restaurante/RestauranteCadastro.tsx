@@ -53,10 +53,25 @@ const RestauranteCadastro: React.FC = () => {
       return toast.error(`O campo telefone deve ter no máximo 15 caracteres e não ${formData.telefone.length}`);
     }
 
-    if (Object.values(formData).some((value) => !value)) {
+    if (
+      !formData?.Cliente ||
+      !formData?.IE ||
+      !formData?.dataNascimento ||
+      !formData?.endereco ||
+      !formData?.numero ||
+      !formData?.bairro ||
+      !formData?.cidade ||
+      !formData?.estado ||
+      !formData?.cep ||
+      !formData?.telefone ||
+      !formData?.email ||
+      !formData?.senha
+    ) {
       setLoading(false);
-      return toast.warn("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
+      return;
     }
+
     try {
       verificarSenha(formData.senha);
     } catch (error: any) {
