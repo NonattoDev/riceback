@@ -4,6 +4,8 @@ import Link from "next/link";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import logo from "../../../public/logo.png";
 
 const Header: React.FC = () => {
   const { data: session, status } = useSession();
@@ -39,7 +41,7 @@ const Header: React.FC = () => {
       </div>
       <div className="navbar-center">
         <Link href={`/`} className="btn btn-ghost text-xl">
-          Rice Back
+          <Image src={logo} alt="Riceback" width={50} height={50} />
         </Link>
       </div>
       <div className="navbar-end">
