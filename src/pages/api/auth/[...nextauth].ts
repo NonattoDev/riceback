@@ -88,6 +88,11 @@ export const authOptions = {
         user = await db("clientes").where({ EMail: login, Chave: senha }).first();
 
         if (user) {
+          // Verifica se o usuario confirmou o cadastro
+          if (user.ContaConfirmada === "F") {
+            throw new Error("Por favor confirme a sua conta no seu email!");
+          }
+
           try {
             await transporter.sendMail({
               from: {

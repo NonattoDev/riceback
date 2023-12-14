@@ -26,9 +26,15 @@ export default function Home() {
         <h1 className="text-5xl font-bold">Olá, seja bem vindo ao RiceBack</h1>
         <p className="py-6">Fomos desenvolvidos pela Softline Sistemas.</p>
         <div className="flex justify-center items-center">
-          <Link href={`/auth/login`} className="btn btn-primary">
-            Fazer login
-          </Link>
+          {status === "unauthenticated" ? (
+            <Link href={`/auth/login`} className="btn btn-primary">
+              Fazer login
+            </Link>
+          ) : (
+            <Link href={`/usuarios/${segmento?.toLocaleLowerCase()}`} className="btn btn-primary">
+              Meu Dashboard
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -41,7 +41,9 @@ const LoginPage: React.FC = () => {
 
     if (result?.error) {
       setLoading(false);
-      return toast.error(result.error);
+      if (result?.error === "Por favor confirme a sua conta no seu email!") return toast.info(result?.error);
+
+      return toast.error(result?.error);
     } else {
       toast.success("Login realizado com sucesso");
       return;

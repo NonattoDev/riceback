@@ -16,6 +16,12 @@ ADD tokenVerificacao VARCHAR(10),
     tokenData varchar(25);  
 
 
+
+-- Adiciona em Clientes uma coluna chamada ContaConfirmada com valores Boolean T ou F
+ALTER TABLE Clientes
+ADD ContaConfirmada varchar(1);
+
+
 --Adicionar em Clientes um CODPRO (int)
 ALTER TABLE Clientes
 ADD CodPro1 int,

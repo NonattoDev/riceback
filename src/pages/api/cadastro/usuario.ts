@@ -37,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           CodSeg: 1,
           Tipo: "F",
           DataCad: moment().format("yyyy-MM-DD"),
+          ContaConfirmada: "F",
         })
         .returning("*");
 
