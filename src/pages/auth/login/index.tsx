@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import PasswordResetModal from "./Components/RecuperarSenha";
+import axios from "axios";
 
 const LoginPage: React.FC = () => {
   const { data: session, status } = useSession();
@@ -15,6 +16,7 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  const [showResendVerification, setShowResendVerification] = useState(false);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -41,12 +43,32 @@ const LoginPage: React.FC = () => {
 
     if (result?.error) {
       setLoading(false);
-      if (result?.error === "Por favor confirme a sua conta no seu email!") return toast.info(result?.error);
+      if (result.error === "Por favor confirme a sua conta no seu email!") {
+        setShowResendVerification(true);
+        return toast.info(result.error);
+      }
 
       return toast.error(result?.error);
     } else {
       toast.success("Login realizado com sucesso");
       return;
+    }
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      if (!login) {
+        toast.info('Por favor, preencha o campo de e-mail, e Clique em "Reenviar código de verificação" novamente!');
+        return;
+      }
+
+      if (!login.includes("@")) return toast.info("Preencha um email válido");
+
+      const response = await axios.post(`/api/usuarios/reenviarToken/${login}`);
+
+      toast.success("E-mail de verificação reenviado!");
+    } catch (error) {
+      toast.error("Erro ao reenviar e-mail de verificação!");
     }
   };
 
@@ -78,6 +100,13 @@ const LoginPage: React.FC = () => {
                   <button type="button" className="btn btn-primary" onClick={handleLogin}>
                     Login
                   </button>
+                )}
+                {showResendVerification && (
+                  <div className="text-center mt-4">
+                    <span className="btn btn-link" onClick={handleResendVerification}>
+                      Reenviar código de verificação
+                    </span>
+                  </div>
                 )}
               </div>
             </form>

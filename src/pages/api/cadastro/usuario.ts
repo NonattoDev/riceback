@@ -2,6 +2,7 @@ import db from "@/db/db";
 import transporter from "@/utils/NodeMailer/Transporter";
 import moment from "moment";
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -16,6 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const ultimoCodCli = await db("Clientes").max("CodCli as CodCli").first();
       let CodCli = ultimoCodCli?.CodCli + 1;
+
+      const ConfirmationToken = uuidv4();
 
       const Cliente = await db("clientes")
         .insert({
@@ -37,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           CodSeg: 1,
           Tipo: "F",
           DataCad: moment().format("yyyy-MM-DD"),
+          ConfirmationToken,
           ContaConfirmada: "F",
         })
         .returning("*");
@@ -70,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   <div class="content">
                     <p>Olá, obrigado por se cadastrar no Soft - RiceBack!</p>
                     <p>Por favor, confirme seu cadastro clicando no botão abaixo.</p>
-                    <a href="LINK_DE_CONFIRMACAO" class="button">Confirmar Cadastro</a>
+                    <a href="${process.env.NEXTAUTH_URL}/usuarios/confirmar-cadastro/${ConfirmationToken}" class="button">Confirmar Cadastro</a>
                   </div>
                   <div class="footer">
                     <p>Soft - RiceBack © 2023. Todos os direitos reservados.</p>
@@ -81,10 +85,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             `,
         });
       } catch (error: any) {
+        // Caso ocorra algum erro no envio do email, deleta o usuário do banco de dados
+        await db("clientes").where("CodCli", Cliente[0].CodCli).del();
         console.log(error.message);
       }
       return res.status(201).json(Cliente);
     } catch (error: any) {
+      const clienteExist = await db("clientes").where("EMail", usuario.email).first();
+
+      if (clienteExist) {
+        // Reverte a transação caso ocorra algum erro
+        await db("clientes").where("EMail", usuario.email).del();
+      }
       console.log(error.message);
       return res.status(400).json({ message: "Não foi possível cadastrar o usuário" });
     }

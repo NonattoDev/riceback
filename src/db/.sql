@@ -17,9 +17,15 @@ ADD tokenVerificacao VARCHAR(10),
 
 
 
+
 -- Adiciona em Clientes uma coluna chamada ContaConfirmada com valores Boolean T ou F
 ALTER TABLE Clientes
 ADD ContaConfirmada varchar(1);
+    ConfirmationToken varchar(40);
+
+-- Adiciona F em todos os Clientes em ContaConfirmada
+UPDATE Clientes
+SET ContaConfirmada = 'F' WHERE ContaConfirmada IS NULL;
 
 
 --Adicionar em Clientes um CODPRO (int)
