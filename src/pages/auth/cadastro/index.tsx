@@ -10,7 +10,7 @@ const CadastroPage: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-200">
+    <div className="flex justify-center items-center min-h-screen bg-base-200 ">
       <div className="card bordered">
         <div className="card-body">
           <div className="flex justify-center">

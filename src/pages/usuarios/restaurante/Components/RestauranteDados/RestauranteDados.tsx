@@ -21,21 +21,10 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   // Função para lidar com a edição do usuário
   const handleEdit = async () => {
     // Verificar se algum campo está vazio
-    if (!user?.Chave) return toast.error("Preencha todos os campos!");
-    if (!user?.Cliente) return toast.error("Preencha todos os campos!");
-    if (!user?.CGC) return toast.error("Preencha todos os campos!");
-    if (!user?.Razao) return toast.error("Preencha todos os campos!");
-    if (!user?.Cep) return toast.error("Preencha todos os campos!");
-    if (!user?.Endereco) return toast.error("Preencha todos os campos!");
-    if (!user?.Numero) return toast.error("Preencha todos os campos!");
-    if (!user?.Bairro) return toast.error("Preencha todos os campos!");
-    if (!user?.Cidade) return toast.error("Preencha todos os campos!");
-    if (!user?.Estado) return toast.error("Preencha todos os campos!");
-    if (!user?.Tel) return toast.error("Preencha todos os campos!");
-    if (!user?.EMail) return toast.error("Preencha todos os campos!");
-    if (!user?.CodPro1) return toast.error("Preencha todos os campos!");
-    if (!user?.Percentual) return toast.error("Preencha todos os campos!");
-    if (!user?.Preco) return toast.error("Preencha todos os campos!");
+
+    if (!user?.Cliente || !user?.EMail || !user?.CGC || !user?.Cep || !user?.Endereco || !user?.Numero || !user?.Bairro || !user?.Cidade || !user?.Estado || !user?.Tel || !user?.Chave)
+      return toast.error("Preencha todos os campos!");
+
     if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
 
     try {

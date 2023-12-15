@@ -5,6 +5,8 @@ import validarCPF from "@/utils/CadastroCliente/validarCPF";
 import verificarSenha from "@/utils/CadastroCliente/verificarSenha";
 import buscarEnderecoPorCEP from "@/utils/CEP/BuscaCEP";
 import axios from "axios";
+import styles from "./ClienteCadastro.module.scss";
+
 import { useRouter } from "next/router";
 const ClienteCadastro: React.FC = () => {
   const router = useRouter();
@@ -31,10 +33,26 @@ const ClienteCadastro: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    if (Object.values(formData).some((value) => !value)) {
+
+    if (
+      !formData.cpf ||
+      !formData.nome ||
+      !formData.dataNascimento ||
+      !formData.endereco ||
+      !formData.numero ||
+      !formData.bairro ||
+      !formData.cidade ||
+      !formData.estado ||
+      !formData.cep ||
+      !formData.telefone ||
+      !formData.email ||
+      !formData.senha
+    ) {
       setLoading(false);
-      return toast.warn("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
+      return;
     }
+
     try {
       validarCPF(formData.cpf);
       verificarSenha(formData.senha);
@@ -90,9 +108,9 @@ const ClienteCadastro: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card w-auto bg-base-100 shadow-xl p-6 rounded-lg">
+    <form onSubmit={handleSubmit} className="card w-auto bg-base-100 shadow-xl p-8 rounded-lg">
       <h2 className="text-2xl mb-4 text-center">Cadastro de Cliente</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className={styles.FormularioResponsivo}>
         <div>
           <label htmlFor="cpf" className="label">
             <span className="label-text">CPF</span>
@@ -105,14 +123,12 @@ const ClienteCadastro: React.FC = () => {
           </label>
           <input type="text" name="nome" id="nome" value={formData.nome} onChange={handleChange} className="input input-bordered" />
         </div>
-
         <div>
           <label htmlFor="senha" className="label">
             <span className="label-text">Senha</span>
           </label>
           <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="input input-bordered" maxLength={10} max={10} />
         </div>
-
         <div>
           <label htmlFor="dataNascimento" className="label">
             <span className="label-text">Data de Nascimento</span>
@@ -175,7 +191,6 @@ const ClienteCadastro: React.FC = () => {
           </label>
           <InputMask mask="(99)99999-9999" name="telefone" id="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" />
         </div>
-
         {loading ? (
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center items-center">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

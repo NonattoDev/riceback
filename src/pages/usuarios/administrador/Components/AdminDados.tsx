@@ -20,9 +20,8 @@ const AdminDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   // Função para lidar com a edição do usuário
   const handleEdit = async () => {
     // Verificar se algum campo está vazio
-    if (Object.values(user).some((value) => value === "")) {
-      return toast.error("Preencha todos os campos!");
-    }
+
+    if (!user?.Usuario || !user?.Senha || !user?.Email) return toast.error("Preencha todos os campos!");
 
     try {
       const response = await axios.put(`/api/meuperfil/usuario/usuario`, user);

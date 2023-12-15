@@ -34,7 +34,7 @@ const Contribuir: React.FC<UsuarioProps> = ({ Usuario }) => {
     }
   }, []);
 
-  // Função para lidar com a contribuição para a ONG
+  // Função para lidar com o pedido social
   const handleContribuir = async () => {
     if (!restauranteSelecionado) {
       return toast.error("Selecione um restaurante primeiro!");
@@ -70,7 +70,7 @@ const Contribuir: React.FC<UsuarioProps> = ({ Usuario }) => {
         </select>
       </div>
       <button className="btn btn-primary gap-2" onClick={handleContribuir}>
-        <FaHeart className="text-red-500" /> Contribuir com a ONG
+        <FaHeart className="text-red-500" /> Solicitar porção social
       </button>
     </>
   );

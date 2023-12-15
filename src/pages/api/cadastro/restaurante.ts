@@ -3,6 +3,7 @@ import transporter from "@/utils/NodeMailer/Transporter";
 import moment from "moment";
 import { NextApiRequest, NextApiResponse } from "next";
 import NodeGeocoder, { Options } from "node-geocoder";
+import { v4 as uuidv4 } from "uuid";
 
 const options: Options = {
   provider: "google",
@@ -29,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const latitude = resGeocode[0]?.latitude;
       const longitude = resGeocode[0]?.longitude;
 
+      const ConfirmationToken = uuidv4();
 
       const Cliente = await db("clientes")
         .insert({
@@ -54,11 +56,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           DataCad: moment().format("yyyy-MM-DD"),
           Latitude: latitude,
           Longitude: longitude,
+          ConfirmationToken,
+          ContaConfirmada: "F",
         })
         .returning("*");
 
       try {
-        transporter.sendMail({
+        await transporter.sendMail({
           from: {
             name: "Soft - RiceBack",
             address: process.env.GMAIL_LOGIN as string,
@@ -86,7 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   <div class="content">
                     <p>Olá, obrigado por se cadastrar no Soft - RiceBack!</p>
                     <p>Por favor, confirme seu cadastro clicando no botão abaixo.</p>
-                    <a href="LINK_DE_CONFIRMACAO" class="button">Confirmar Cadastro</a>
+                    <a href="${process.env.NEXTAUTH_URL}/usuarios/confirmar-cadastro/${ConfirmationToken}" class="button">Confirmar Cadastro</a>
                   </div>
                   <div class="footer">
                     <p>Soft - RiceBack © 2023. Todos os direitos reservados.</p>

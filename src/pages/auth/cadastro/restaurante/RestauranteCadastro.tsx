@@ -7,6 +7,7 @@ import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
 import validarCNPJ from "@/utils/CNPJ/validaCNPJ";
+import styles from "./RestauranteCadastro.module.scss";
 
 const RestauranteCadastro: React.FC = () => {
   const router = useRouter();
@@ -53,10 +54,25 @@ const RestauranteCadastro: React.FC = () => {
       return toast.error(`O campo telefone deve ter no máximo 15 caracteres e não ${formData.telefone.length}`);
     }
 
-    if (Object.values(formData).some((value) => !value)) {
+    if (
+      !formData?.Cliente ||
+      !formData?.IE ||
+      !formData?.dataNascimento ||
+      !formData?.endereco ||
+      !formData?.numero ||
+      !formData?.bairro ||
+      !formData?.cidade ||
+      !formData?.estado ||
+      !formData?.cep ||
+      !formData?.telefone ||
+      !formData?.email ||
+      !formData?.senha
+    ) {
       setLoading(false);
-      return toast.warn("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
+      return;
     }
+
     try {
       verificarSenha(formData.senha);
     } catch (error: any) {
@@ -128,7 +144,7 @@ const RestauranteCadastro: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="card w-auto bg-base-100 shadow-xl p-6 rounded-lg">
       <h2 className="text-2xl mb-4 text-center">Cadastro de Cliente</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className={styles.FormularioResponsivo}>
         <div>
           <label htmlFor="CGC" className="label">
             <span className="label-text">CNPJ</span>

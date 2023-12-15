@@ -24,6 +24,7 @@ export default function App({ Component, pageProps }: EnhancedAppProps) {
       <QueryClientProvider client={queryClient}>
         <>
           <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Riceback</title>
           </Head>
           <Header />
