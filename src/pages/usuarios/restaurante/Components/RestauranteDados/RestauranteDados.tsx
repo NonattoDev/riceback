@@ -21,10 +21,21 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   // Função para lidar com a edição do usuário
   const handleEdit = async () => {
     // Verificar se algum campo está vazio
-    if (Object.values(user).some((value) => value === "")) {
-      return toast.error("Preencha todos os campos!");
-    }
-
+    if (!user?.Chave) return toast.error("Preencha todos os campos!");
+    if (!user?.Cliente) return toast.error("Preencha todos os campos!");
+    if (!user?.CGC) return toast.error("Preencha todos os campos!");
+    if (!user?.Razao) return toast.error("Preencha todos os campos!");
+    if (!user?.Cep) return toast.error("Preencha todos os campos!");
+    if (!user?.Endereco) return toast.error("Preencha todos os campos!");
+    if (!user?.Numero) return toast.error("Preencha todos os campos!");
+    if (!user?.Bairro) return toast.error("Preencha todos os campos!");
+    if (!user?.Cidade) return toast.error("Preencha todos os campos!");
+    if (!user?.Estado) return toast.error("Preencha todos os campos!");
+    if (!user?.Tel) return toast.error("Preencha todos os campos!");
+    if (!user?.EMail) return toast.error("Preencha todos os campos!");
+    if (!user?.CodPro1) return toast.error("Preencha todos os campos!");
+    if (!user?.Percentual) return toast.error("Preencha todos os campos!");
+    if (!user?.Preco) return toast.error("Preencha todos os campos!");
     if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
 
     try {
@@ -34,12 +45,18 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
       return;
     }
 
+    let precoFormatado = user?.Preco.replace(",", ".");
+    const Preco = Number(precoFormatado);
+    console.log(Preco);
+
     const dadosTratados = {
       ...user,
+      Preco: Preco,
       CPF: user?.CPF?.replace(".", ""),
       Cep: user?.Cep?.replace(".", ""),
       Tel: user?.Tel?.replace(" ", ""),
     };
+    console.log(dadosTratados);
 
     try {
       const response = await axios.put(`/api/meuperfil/usuario/usuario`, dadosTratados);
@@ -129,6 +146,20 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
           />
+          <label className="label">
+            <span className="label-text">Produto</span>
+          </label>
+          <input className="input input-bordered w-full" type="string" value={user?.CodPro1 && "Arroz Social"} disabled={true} maxLength={10} />
+          <label className="label">
+            <span className="label-text">Percentual</span>
+          </label>
+          <input
+            className="input input-bordered w-full"
+            type="string"
+            value={user?.Percentual}
+            disabled={!isEditable}
+            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Percentual: e.target.value }))}
+          />
         </div>
         {/* Coluna 2*/}
         <div className="form-control">
@@ -186,6 +217,10 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
             maxLength={10}
           />
+          <label className="label">
+            <span className="label-text">Preço</span>
+          </label>
+          <input className="input input-bordered w-full" type="string" value={user?.Preco} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Preco: e.target.value }))} />
         </div>
       </div>
       <div className="mt-4">
