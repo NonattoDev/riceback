@@ -22,7 +22,7 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
   const handleEdit = async () => {
     // Verificar se algum campo está vazio
 
-    if (!user?.Cliente || !user?.EMail || !user?.CGC || !user?.Cep || !user?.Endereco || !user?.Numero || !user?.Bairro || !user?.Cidade || !user?.Estado || !user?.Tel || !user?.Chave)
+    if (!user?.Cliente || !user?.EMail || !user?.CGC || !user?.Cep || !user?.Endereco || !user?.Numero || !user?.Bairro || !user?.Cidade || !user?.Estado || !user?.Tel || !user?.Chave || !user?.Preco)
       return toast.error("Preencha todos os campos!");
 
     if (user?.Bairro?.length && user.Bairro.length > 25) return toast.error("Endereço muito longo!");
@@ -34,12 +34,18 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
       return;
     }
 
+    let precoFormatado = user?.Preco.replace(",", ".");
+    const Preco = Number(precoFormatado);
+    console.log(Preco);
+
     const dadosTratados = {
       ...user,
+      Preco: Preco,
       CPF: user?.CPF?.replace(".", ""),
       Cep: user?.Cep?.replace(".", ""),
       Tel: user?.Tel?.replace(" ", ""),
     };
+    console.log(dadosTratados);
 
     try {
       const response = await axios.put(`/api/meuperfil/usuario/usuario`, dadosTratados);
@@ -129,6 +135,20 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
           />
+          <label className="label">
+            <span className="label-text">Produto</span>
+          </label>
+          <input className="input input-bordered w-full" type="string" value={user?.CodPro1 && "Arroz Social"} disabled={true} maxLength={10} />
+          <label className="label">
+            <span className="label-text">Percentual</span>
+          </label>
+          <input
+            className="input input-bordered w-full"
+            type="string"
+            value={user?.Percentual}
+            disabled={!isEditable}
+            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Percentual: e.target.value }))}
+          />
         </div>
         {/* Coluna 2*/}
         <div className="form-control">
@@ -186,6 +206,10 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
             maxLength={10}
           />
+          <label className="label">
+            <span className="label-text">Preço</span>
+          </label>
+          <input className="input input-bordered w-full" type="string" value={user?.Preco} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Preco: e.target.value }))} />
         </div>
       </div>
       <div className="mt-4">
