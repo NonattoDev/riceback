@@ -206,6 +206,9 @@ const RestauranteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
             maxLength={10}
           />
+          <div className="label">
+            <span className="label-text-alt">A senha deve conter pelo menos 1 letra maiúscula e 1 caractere especial</span>
+          </div>
           <label className="label">
             <span className="label-text">Preço</span>
           </label>

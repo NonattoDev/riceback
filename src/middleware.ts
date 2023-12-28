@@ -10,7 +10,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/api/meuperfil)") ||
     request.nextUrl.pathname.startsWith("/api/restaurante/") ||
     request.nextUrl.pathname.startsWith("/api/solicitar/") ||
-    request.nextUrl.pathname.startsWith("/api/usuarios/") ||
     request.nextUrl.pathname === "/api/gerarTokenparaUsuarios"
   ) {
     if (!token) {

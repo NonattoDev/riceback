@@ -112,6 +112,20 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             <span className="label-text">Cidade</span>
           </label>
           <input type="text" className="input input-bordered w-full" value={user?.Cidade} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Cidade: e.target.value }))} />
+          <label className="label">
+            <span className="label-text">Senha</span>
+          </label>
+          <input
+            className="input input-bordered w-full"
+            type="password"
+            value={user?.Chave}
+            disabled={!isEditable}
+            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
+            maxLength={10}
+          />
+          <div className="label">
+            <span className="label-text-alt">A senha deve conter pelo menos 1 letra maiúscula e 1 caractere especial</span>
+          </div>
         </div>
         {/* Coluna 2*/}
         <div className="form-control">
@@ -164,17 +178,6 @@ const ClienteDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             value={user?.Tel}
             disabled={!isEditable}
             onChange={(e) => setUser((prevUser) => ({ ...prevUser, Tel: e.target.value }))}
-          />
-          <label className="label">
-            <span className="label-text">Senha</span>
-          </label>
-          <input
-            className="input input-bordered w-full"
-            type="password"
-            value={user?.Chave}
-            disabled={!isEditable}
-            onChange={(e) => setUser((prevUser) => ({ ...prevUser, Chave: e.target.value }))}
-            maxLength={10}
           />
         </div>
       </div>

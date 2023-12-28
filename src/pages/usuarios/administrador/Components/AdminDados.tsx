@@ -61,6 +61,9 @@ const AdminDados: React.FC<UsuarioProps> = ({ Usuario }) => {
             <span className="label-text">Senha</span>
           </label>
           <input type="password" className="input input-bordered w-full" value={user?.Senha} disabled={!isEditable} onChange={(e) => setUser((prevUser) => ({ ...prevUser, Senha: e.target.value }))} />
+          <div className="label">
+            <span className="label-text-alt">A senha deve conter pelo menos 1 letra maiúscula e 1 caractere especial</span>
+          </div>
         </div>
         {/* Coluna 2*/}
         <div className="form-control">

@@ -128,6 +128,9 @@ const ClienteCadastro: React.FC = () => {
             <span className="label-text">Senha</span>
           </label>
           <input type="password" name="senha" id="senha" value={formData.senha} onChange={handleChange} className="input input-bordered" maxLength={10} max={10} />
+          <div className="label">
+            <span className="label-text-alt">A senha deve conter pelo menos 1 letra maiúscula e 1 caractere especial</span>
+          </div>
         </div>
         <div>
           <label htmlFor="dataNascimento" className="label">

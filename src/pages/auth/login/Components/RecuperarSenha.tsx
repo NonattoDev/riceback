@@ -130,6 +130,9 @@ const PasswordResetModal: React.FC<Props> = ({ isOpen, closeModal }) => {
                 <span className="label-text">Nova Senha</span>
               </label>
               <input type="password" className="input input-bordered" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+              <div className="label">
+                <span className="label-text-alt">A senha deve conter pelo menos 1 letra maiúscula e 1 caractere especial</span>
+              </div>
             </div>
             <div className="form-control">
               <label className="label">
